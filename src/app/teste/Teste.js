@@ -87,7 +87,7 @@ class Teste extends React.Component
 //        data['operacoes'] = this.getOperacoes();
 //
 //        this.getConsulta().setState({bloqueado: true});
-//        App.fetch.getJson(window.App.basePath + '/app/perfis/persistir', {
+//        App.fetch.getJson(window.App.basePath + '/app/teste/persistir', {
 //            body: JSON.stringify(data),
 //            method: "POST"
 //        }).then((resp) => {
@@ -135,7 +135,7 @@ class Teste extends React.Component
                 filters={filters}
                 sidx={this.state.sidx}
                 sord={this.state.sord}
-                resource="index"
+                resource="teste"
                 onClear={this.onClear}
                 onSubmit={this.onSubmit}
                 renderItens={this.renderItens}

@@ -23,31 +23,19 @@ return [
             'app' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/app[/:action]',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                    'route'    => '/app/[:controller[/:action]]',
+                    'constraints' => [
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
-                ],
-                'may_terminate' => true,
-                'child_routes' => [
-                    'default' => [
-                        'type'    => 'Segment',
-                        'options' => [
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => [
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ],
-                        ],
-                    ],
-                ],
+                ]
             ],
         ],
     ],
 
     'controllers' => [
         'aliases' => [
+            'index' => Controller\IndexController::class,
             'teste' =>  Controller\TesteController::class
         ],
         'factories' => [

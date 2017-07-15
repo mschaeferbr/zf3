@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-
-class TesteController extends AbstractActionController
+class TesteController extends DefaultController
 {
     public function testeAction()
     {
         var_dump('aki teste controller');exit();
+    }
+
+    public function consultarAction()
+    {
+        var_dump('aki teste controller');exit();
+
+        return $this->sendJson($this->consultaPadrao($service));
     }
 }
