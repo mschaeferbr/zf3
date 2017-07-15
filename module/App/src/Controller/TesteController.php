@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace App\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 

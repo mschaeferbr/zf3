@@ -1,5 +1,5 @@
 <?php
-namespace Application;
+namespace App;
 
 //use Zend\Mvc\ModuleRouteListener;
 //use Zend\Mvc\MvcEvent;
