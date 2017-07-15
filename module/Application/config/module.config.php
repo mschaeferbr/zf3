@@ -31,20 +31,25 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'teste' => [
-                        'type' => Segment::class,
+                    'default' => [
+                        'type'    => 'Segment',
                         'options' => [
-                            'route' => '/teste[/:action]',
-                            'defaults' => [
-                                'controller' => Controller\TesteController::class
-                            ]
-                        ]
-                    ]
-                ]
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => [
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],
+
     'controllers' => [
+        'aliases' => [
+            'teste' =>  Controller\TesteController::class
+        ],
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\TesteController::class => InvokableFactory::class,
