@@ -5,6 +5,27 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 class DefaultController extends AbstractActionController
 {
+    /**
+     * @var \PDO
+     */
+    private $pdo;
+
+    public function __construct()
+    {
+        session_start();
+    }
+
+    /**
+     * @return \PDO
+     */
+    public function getPdo()
+    {
+        if (empty($this->pdo)) {
+            $this->pdo = new \PDO("pgsql:dbname=dbname;host=localhost;port=5432", 'sysdba', '');
+        }
+        return $this->pdo;
+    }
+
     public function send($content, $type = 'text/html')
     {
         $response = $this->getResponse();

@@ -39,7 +39,7 @@ class Main extends React.Component
         this.updateDimensions = this.updateDimensions.bind(this);
         this.handleMenuIcon = this.handleMenuIcon.bind(this);
         this.handleTouchTap = this.handleTouchTap.bind(this);
-        this.onChangeEntity = this.onChangeEntity.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.showHideMenu = this.showHideMenu.bind(this);
         this.setHeight = this.setHeight.bind(this);
 
@@ -104,7 +104,7 @@ class Main extends React.Component
         });
     }
 
-    onChangeEntity(app)
+    onChange(app)
     {
         this.setState({mainColor: app.entity.mainColor, user: app.user.name, root: (app.user.id == 1)});
     };
@@ -133,21 +133,22 @@ class Main extends React.Component
                         containerElement={<Link to="/"/>}
                         onTouchTap={this.handleListItemTouchTap}
                     />
-
-                    <ListItem
-                        primaryText="Cadastros"
-                        leftIcon={<ImageCadastros />}
-                        initiallyOpen={false}
-                        primaryTogglesNestedList={true}
-                        nestedItems={[
-                            <ListItem
-                                key="teste"
-                                primaryText="Testes"
-                                containerElement={<Link to="/teste"/>}
-                                onTouchTap={this.handleListItemTouchTap}
-                            />
-                        ]}
-                    />
+                    {this.state.user &&
+                        <ListItem
+                            primaryText="Cadastros"
+                            leftIcon={<ImageCadastros />}
+                            initiallyOpen={false}
+                            primaryTogglesNestedList={true}
+                            nestedItems={[
+                                <ListItem
+                                    key="teste"
+                                    primaryText="Testes"
+                                    containerElement={<Link to="/teste"/>}
+                                    onTouchTap={this.handleListItemTouchTap}
+                                />
+                            ]}
+                        />
+                    }
                 </List>
             </div>
         );
@@ -159,11 +160,12 @@ class Main extends React.Component
                     <Message />
                     <AppBar
                         style={{zIndex: 1030, backgroundColor: this.state.mainColor}}
-                        title={<Entities onChange={this.onChangeEntity}/>}
+                        title={<Entities onChange={this.onChange}/>}
                         showMenuIconButton={true}
                         iconElementLeft={iconeMenu}
                         iconElementRight={
                             <IconesSuperiores
+                                onChange={this.onChange}
                                 defaultToggled={this.state.showMenu}
                                 showHideMenu={this.showHideMenu}
                                 setHeight={this.setHeight}

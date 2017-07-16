@@ -21,6 +21,8 @@ class IconesSuperiores extends React.Component
 
         this.renderSearch = this.renderSearch.bind(this);
         this.goToProspect = this.goToProspect.bind(this);
+        this.onLogout = this.onLogout.bind(this);
+        this.onLogin = this.onLogin.bind(this);
 
         this.state = {
             prospects: [],
@@ -50,30 +52,49 @@ class IconesSuperiores extends React.Component
     {
     }
 
+    onLogin()
+    {
+        App.fetch.getJson(window.App.basePath + '/app/index/login').then((resp) => {
+            window.App.user = resp.data;
+            this.props.onChange(window.App);
+        });
+    }
+
+    onLogout()
+    {
+        App.fetch.getJson(window.App.basePath + '/app/index/logout').then(() => {
+            window.App.user = {};
+            this.props.onChange(window.App);
+            this.context.router.push({pathname: '/', state: {
+                oportunidade: {}
+            }});
+        });
+    }
+
     goToProspect(id)
     {
-        this.context.router.push({pathname: '/com-prospect', state: {prospect: id}});
-        this.setState({prospectSearch: ''});
+//        this.context.router.push({pathname: '/com-prospect', state: {prospect: id}});
+//        this.setState({prospectSearch: ''});
     }
 
     handleDescricao(value)
     {
-        var searchTimeout = this.state.searchTimeout,
-            prospect = this.state.prospect;
-        prospect.razaosocial = value;
-        prospect.nome = value;
-
-
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            App.fetch.getJson(window.App.basePath + '/app/com-prospect/get-by-descricao', {
-                body: JSON.stringify({descricao: value}),
-                method: "POST"
-            }).then((resp) => {
-                (resp.type === 'success') && this.setState({prospects: resp.data || []});
-            });
-        }, 300);
-        this.setState({searchTimeout: searchTimeout, prospect: prospect, prospectSearch: value});
+//        var searchTimeout = this.state.searchTimeout,
+//            prospect = this.state.prospect;
+//        prospect.razaosocial = value;
+//        prospect.nome = value;
+//
+//
+//        clearTimeout(searchTimeout);
+//        searchTimeout = setTimeout(() => {
+//            App.fetch.getJson(window.App.basePath + '/app/com-prospect/get-by-descricao', {
+//                body: JSON.stringify({descricao: value}),
+//                method: "POST"
+//            }).then((resp) => {
+//                (resp.type === 'success') && this.setState({prospects: resp.data || []});
+//            });
+//        }, 300);
+//        this.setState({searchTimeout: searchTimeout, prospect: prospect, prospectSearch: value});
     }
 
     render()
@@ -137,12 +158,10 @@ class IconesSuperiores extends React.Component
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem
-                        primaryText="Meu Perfil"
-                        leftIcon={<ImageSettings />}
-                        containerElement={<Link to={{pathname: '/older', query: {frame: 'minha-conta/perfil'}}} />}
-                    />
-                    <MenuItem leftIcon={<ImageSair />} href={window.App.basePath + "/app/index/logout"} primaryText="Sair" />
+                {this.props.user ?
+                    <MenuItem leftIcon={<ImageSair />} onTouchTap={this.onLogout} primaryText="Sair" />
+                    : <MenuItem leftIcon={<ImageSair />} onTouchTap={this.onLogin} primaryText="Logar" />
+                }
                 </IconMenu>
                 {this.renderSearch()}
             </div>

@@ -31,7 +31,6 @@ class Entities extends React.Component
             this.props.onChange(window.App);
 
             this.setState({entities: window.App.entities, entity: window.App.entity, user: window.App.user});
-
         });
     }
 

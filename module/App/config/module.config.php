@@ -30,6 +30,20 @@ return [
                     ],
                 ]
             ],
+
+            'react' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'defaults' => array(
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'index',
+                    ),
+                    'route'    => '/[:react]',
+                    'constraints' => array(
+                        'react' => 'teste',
+                    ),
+                ),
+            ),
         ],
     ],
 
